@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import 'bulma/css/bulma.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function App() {
+// Redux
+import { fetchUser } from './actions/firebase-actions';
+import { connect } from 'react-redux';
+
+// Components
+import Home from './compoments/Home/Home';
+import Header from './compoments/Header/Header';
+import Public from './compoments/Public/Public';
+import Private from './compoments/Private/Private';
+import Login from './compoments/Auth/Login';
+import Register from './compoments/Auth/Register';
+
+function App({ fetchUser }) {
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <section className='section'>
+        <div className='container'>
+          <Header />
+          <Switch>
+            <Route exact path='/' component={Home} />
+            <Route path='/public' component={Public} />
+            <Route path='/private' component={Private} />
+
+            <Route path='/login' component={Login} />
+            <Route path='/register' component={Register} />
+          </Switch>
+          <ToastContainer autoClose={3000} hideProgressBar />
+        </div>
+      </section>
+    </Router>
   );
 }
 
-export default App;
+export default connect(null, { fetchUser })(App);
