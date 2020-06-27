@@ -8,7 +8,10 @@ The auth folder has a file in it called `config.example.js` this file needs to b
 
 Rename `config.example.js` to `config.js` for it to work with the application.
 
+---
+
 Todo:
 
 - [ ] Implement other google, facebook ect. authentication
 - [ ] Rework template to include better refresh features for navigation bar
+- [ ] Implement Private Routes
